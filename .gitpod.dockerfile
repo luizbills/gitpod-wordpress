@@ -1,7 +1,6 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # License: MIT (c) 2019 Luiz Paulo "Bills"
 # Version: 0.3
-
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
@@ -62,18 +61,7 @@ RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
         -O $HOME/wp-cli-completion.bash \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
-    && chown gitpod:gitpod /usr/local/bin/wp \
-    && wget -q https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64 \
-        - O /usr/local/bin/mailhog \
-    && chmod +x /usr/local/bin/mailhog \
-    && chown gitpod:gitpod /usr/local/bin/mailhog \
-    && wget -q https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 \
-         - O /usr/local/bin/mhsendmail \
-    && chmod +x /usr/local/bin/mhsendmail \
-    && chown gitpod:gitpod /usr/local/bin/mhsendmail \
-    && cat $HOME/gitpod-wordpress/conf/mailhog.service > /etc/systemd/system/mailhog.service \
-    && systemctl enable mailhog \
-    && systemctl start mailhog
+    && chown gitpod:gitpod /usr/local/bin/wp
 
 # - download WordPress from https://wordpress.org
 # - download Adminer from https://www.adminer.org/
