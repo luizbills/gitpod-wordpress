@@ -5,12 +5,13 @@ ENV PHP_VERSION="7.3"
 ENV APACHE_DOCROOT="public_html"
 
 ### Download WordPress
-wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip
-unzip $HOME/wordpress.zip $HOME
-unlink $HOME/wordpress.zip
+USER gitpod
+RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
+    && unzip $HOME/wordpress.zip $HOME \
+    && unlink $HOME/wordpress.zip
 
 ### Download Config Files
-git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress
+RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress
 
 ### Apache Webserver ###
 USER root
