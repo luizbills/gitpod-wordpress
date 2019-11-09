@@ -37,7 +37,6 @@ RUN apt-get update \
         php${PHP_VERSION}-json \
         php${PHP_VERSION}-zip \
         php${PHP_VERSION}-soap \
-        php${PHP_VERSION}-curl \
         php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
