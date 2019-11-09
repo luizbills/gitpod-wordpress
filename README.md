@@ -16,8 +16,8 @@
 
 Just copy the `.gitpod.yml` and `.gitpod.dockerfile` to your project root directory.
 
-- If your project is a theme, change the `wp_setup_plugin` to `wp_setup_theme` in your `.gitpod.yml`.
-- By default, the webserver will use `PHP v7.3`. If you need a different version, change it on `ENV PHP_VERSION` in your `.gitpod.dockerfile` (line 4).
+- If your project is a theme, change the `wp-setup-plugin` to `wp-setup-theme` in your `.gitpod.yml`.
+- By default, the webserver will use PHP `v7.3`. If you need a different version, change it on `ENV PHP_VERSION` in your `.gitpod.dockerfile` (line 4).
 
 ## Usage
 
