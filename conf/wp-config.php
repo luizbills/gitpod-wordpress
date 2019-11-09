@@ -22,8 +22,8 @@ define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
 
-define( 'WP_MEMORY_LIMIT', '128M' );
-define( 'WP_MAX_MEMORY_LIMIT', '128M' );
+define( 'WP_MEMORY_LIMIT', '256M' );
+define( 'WP_MAX_MEMORY_LIMIT', '256M' );
 
 // Force SSL
 $_SERVER['HTTPS'] = 'on';
