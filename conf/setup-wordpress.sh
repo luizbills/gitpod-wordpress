@@ -1,5 +1,15 @@
 
 # WordPress Setup Script
+function _wp_setup_database () {
+  # user     = wordpress
+  # password = wordpress
+  # database = wordpress
+  mysql -e "CREATE DATABASE wordpress /*\!40100 DEFAULT CHARACTER SET utf8 */;" \
+  mysql -e "CREATE USER wordpress@localhost IDENTIFIED BY 'wordpress';" \
+  mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';" \
+  mysql -e "FLUSH PRIVILEGES;"
+}
+
 function _wp_setup () {
   FLAG="$HOME/.wordpress-installed"
 
