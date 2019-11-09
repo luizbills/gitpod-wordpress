@@ -121,3 +121,7 @@ export -f browse-mails
 # use Node.js LTS
 nvm use lts/* > /dev/null
 export NODE_VERSION=$(node -v | sed 's/v//g')
+
+# WP-CLI auto completion
+. $HOME/wp-cli-completion.bash
+
