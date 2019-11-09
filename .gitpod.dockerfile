@@ -54,24 +54,35 @@ RUN apt-get update \
     && a2enmod mpm_prefork \
     && a2dismod php* \
     && a2enmod php${PHP_VERSION} \
-    && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
-    && wget https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash \
+    && wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash \
         -O $HOME/wp-cli-completion.bash \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
-    && chown gitpod:gitpod /usr/local/bin/wp
+    && chown gitpod:gitpod /usr/local/bin/wp \
+    && wget -q https://github.com/mailhog/MailHog/releases/download/v1.0.0/MailHog_linux_amd64 \
+        - O /usr/local/bin/mailhog \
+    && chmod +x /usr/local/bin/mailhog \
+    && chown gitpod:gitpod /usr/local/bin/mailhog \
+    && wget -q https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 \
+         - O /usr/local/bin/mhsendmail \
+    && chmod +x /usr/local/bin/mhsendmail \
+    && chown gitpod:gitpod /usr/local/bin/mhsendmail \
+    && cat $HOME/gitpod-wordpress/conf/mailhog.service > /etc/systemd/system/mailhog.service \
+    && systemctl enable mailhog \
+    && systemctl start mailhog
 
 # - download WordPress from https://wordpress.org
 # - download Adminer from https://www.adminer.org/
 # - create a endpoint with phpinfo()
 USER gitpod
-RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
+RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip -qn $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip \
     && cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess \
     && mkdir $HOME/wordpress/database/ \
-    && wget https://github.com/vrana/adminer/releases/download/v4.7.4/adminer-4.7.4-mysql.php \
+    && wget -q https://github.com/vrana/adminer/releases/download/v4.7.4/adminer-4.7.4-mysql.php \
         -O $HOME/wordpress/database/index.php \
     && mkdir $HOME/wordpress/phpinfo/ \
     && echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
