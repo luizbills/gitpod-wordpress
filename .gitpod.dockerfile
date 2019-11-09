@@ -51,6 +51,8 @@ RUN apt-get update \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
     && chown gitpod:gitpod /usr/local/bin/wp \
+    && apt-add-repository ppa:brightbox/ruby-ng \
+    && apt-get update \
     && apt-get -y install ruby2.6-dev \
     && gem install mailcatcher \
     && cp $HOME/gitpod-wordpress/conf/mailcatcher.conf /etc/init/mailcatcher.conf \
