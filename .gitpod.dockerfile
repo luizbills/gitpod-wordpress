@@ -1,6 +1,5 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
-# Author: Luiz Bills
-# License: MIT
+# License: MIT (c) 2019 Luiz Paulo "Bills"
 # Version: 0.1
 
 FROM gitpod/workspace-mysql
