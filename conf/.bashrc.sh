@@ -63,8 +63,8 @@ function wp-setup () {
 
   cd $DESTINATION
 
-  if [ -f $DESTINATION/init.sh ]; then
-    /bin/sh $DESTINATION/init.sh
+  if [ -f $DESTINATION/.init.sh ]; then
+    /bin/sh $DESTINATION/.init.sh
   fi
   
   shopt -u dotglob
