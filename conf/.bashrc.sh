@@ -115,3 +115,6 @@ export -f browse-wpadmin
 export -f browse-dbadmin
 export -f browse-phpinfo
 export -f browse-mails
+
+# fix NODE_VERSION env
+export NODE_VERSION=$(node -v | sed 's/v//g')
