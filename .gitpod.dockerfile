@@ -5,12 +5,16 @@ ENV PHP_VERSION="7.3"
 ENV APACHE_DOCROOT="public_html"
 
 ### Download Config Files ###
+# also:
+# - install WordPress setup scripts
 USER gitpod
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
-    # Install WordPress setup scripts
     && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc
 
 ### Apache Webserver ###
+# also:
+# - install PHP
+# - install WP-CLI
 USER root
 RUN apt-get update \
     && apt-get -y install apache2 \
@@ -18,8 +22,6 @@ RUN apt-get update \
     && chown -R gitpod:gitpod /var/run/apache2 /var/lock/apache2 /var/log/apache2 \
     && echo "include ${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf \
     && echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars \
-
-    ### PHP ###
     && apt-get -y remove php* \
     && add-apt-repository ppa:ondrej/php \
     && apt-get update \
@@ -45,8 +47,6 @@ RUN apt-get update \
     && a2enmod mpm_prefork \
     && a2dismod php* \
     && a2enmod php${PHP_VERSION} \
-
-    ### WP-CLI ###
     && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
     && chmod +x $HOME/wp-cli.phar \
@@ -54,17 +54,16 @@ RUN apt-get update \
     && chown gitpod:gitpod /usr/local/bin/wp
 
 ### Download WordPress from https://wordpress.org ### 
+# also:
+# - Download Adminer from https://www.adminer.org/
+# - Create a endpoint with phpinfo()
 USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip -qn $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip \
     && cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess \
-
-    # Download Adminer from https://www.adminer.org/
     && mkdir $HOME/wordpress/database/ \
     && wget https://github.com/vrana/adminer/releases/download/v4.7.4/adminer-4.7.4-mysql.php \
         -O $HOME/wordpress/database/index.php \
-
-    # Create a endpoint with phpinfo()
     && mkdir $HOME/wordpress/phpinfo/ \
     && echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
