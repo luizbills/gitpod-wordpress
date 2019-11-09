@@ -1,7 +1,7 @@
 
 # WordPress Setup Script
 function _wp_setup () {
-  FLAG=".wordpress-installed"
+  FLAG="$HOME/.wordpress-installed"
 
   # search the flag file
   if [ -f $FLAG ]; then
@@ -37,6 +37,8 @@ function _wp_setup () {
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
 
   cd $DESTINATION
+  
+  touch $FLAG
 }
 
 function wp_setup_theme () {
