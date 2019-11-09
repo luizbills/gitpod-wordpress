@@ -8,7 +8,7 @@
 - [Composer](https://getcomposer.org/)
 - [Adminer](https://www.adminer.org/)
 - [NVM](https://github.com/nvm-sh/nvm)
-- [NodeJS](https://nodejs.org/)
+- [NodeJS](https://nodejs.org/) (LTS)
 - [Xdebug](https://xdebug.org)
 - [WP-CLI](https://wp-cli.org/)
 - Git
@@ -21,13 +21,15 @@ Just copy the [`.gitpod.yml`](/.gitpod.yml) and [`.gitpod.dockerfile`](/.gitpod.
 - If your project is a theme, change the `wp-setup-plugin` to `wp-setup-theme` in your `.gitpod.yml`.
 - By default, the webserver will use PHP `v7.3`. If you need a different version, change it on `ENV PHP_VERSION` in your `.gitpod.dockerfile` (line 4).
 
-Also, `wp-setup-plugin` (ou `wp-setup-theme`) will search for a `.init.sh` file in your project root directory and execute it (if exists). Then, you can use the `wp-cli` to install plugins, install themes, and [more](https://developer.wordpress.org/cli/commands/). 
+Also, the `wp-setup-plugin` (or `wp-setup-theme`) will search for a `.init.sh` file in your project root directory and execute it (if exists). Then, you can use the `wp-cli` to install plugins, install themes, and [more](https://developer.wordpress.org/cli/commands/). Or create your own tasks. 
 
 ```sh
 # file: init.sh
 wp plugin install woocommerce --activate # install WooCommerce
 wp plugin activate ${REPO_NAME} # activate your plugin
 ```
+
+Project dependencies (in `composer.json` or `package.json`) are automatically installed.
 
 ## Usage
 
