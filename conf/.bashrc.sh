@@ -93,3 +93,8 @@ function open-phpinfo () {
 function open-mailcatcher () {
   # TO DO
 }
+
+export -f open-url
+export -f open-dbadmin
+export -f open-phpinfo
+export -f open-mailcatcher
