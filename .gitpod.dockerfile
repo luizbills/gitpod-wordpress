@@ -10,7 +10,7 @@ RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpre
 
 # Install WordPress setup scripts
 USER gitpod
-RUN cat $HOME/gitpod-wordpress/conf/setup-wordpress.sh >> $HOME/.bashrc
+RUN cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc
 
 ### Apache Webserver ###
 USER root
