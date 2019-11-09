@@ -16,9 +16,7 @@ USER gitpod
 ADD https://api.github.com/repos/luizbills/gitpod-wordpress/compare/master...HEAD /dev/null
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
     && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc \
-    && bash -c ". .nvm/nvm.sh \
-        && nvm install --lts \
-        && npm install -g npm"
+    && bash -c ". .nvm/nvm.sh && nvm install --lts  --latest-npm"
 
 # - install Apache
 # - install PHP
