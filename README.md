@@ -19,6 +19,14 @@ Just copy the `.gitpod.yml` and `.gitpod.dockerfile` to your project root direct
 - If your project is a theme, change the `wp-setup-plugin` to `wp-setup-theme` in your `.gitpod.yml`.
 - By default, the webserver will use PHP `v7.3`. If you need a different version, change it on `ENV PHP_VERSION` in your `.gitpod.dockerfile` (line 4).
 
+Also, `wp-setup-plugin` (ou `wp-setup-theme`) will search for a `.init.sh` file in your project root directory and execute it (if exists). Then, you can use the `wp-cli` to install plugins, install themes, and [more](https://developer.wordpress.org/cli/commands/). 
+
+```sh
+# file: init.sh
+wp plugin install woocommerce --activate # install WooCommerce
+wp plugin activate ${REPO_NAME} # activate your plugin
+```
+
 ## Usage
 
 Now you access `https://gitpod.io/#<url-of-your-github-project>`.
@@ -31,6 +39,7 @@ Your admin credentials:
 username: admin
 password: password
 ```
+
 ## Contributing
 
 To contribute, follow these steps:
