@@ -25,16 +25,9 @@ RUN apt-get update \
     && echo "include ${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf \
     && echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars
 
-# create SSL keys
-# USER root
-# RUN openssl req -batch -new -x509 -newkey rsa:2048 -nodes -sha256 \
-#     -subj /CN=*.{{ vccw.hostname }}/O=oreore -days 3650 \
-#     -keyout /etc/apache2/ssl/wordpress.key \
-#     -out /etc/apache2/ssl/wordpress.crt
-
 ### PHP ###
 USER root
-RUN apt-get -y purge php* \
+RUN apt-get -y remove php* \
     && add-apt-repository ppa:ondrej/php \
     && apt-get update \
     && apt-get -y install libapache2-mod-php \
@@ -56,5 +49,5 @@ RUN apt-get -y purge php* \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && a2dismod mpm_event \
     && a2enmod mpm_prefork \
+    && a2dismod php* \
     && a2enmod php${PHP_VERSION}
-
