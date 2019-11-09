@@ -14,7 +14,7 @@ RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress
 
 ### WordPress setup script ###
-RUN cat $HOME/gitpod-wordpress/conf/setup_wordpress.sh >> $HOME/.bashrc
+RUN cat $HOME/gitpod-wordpress/conf/setup-wordpress.sh >> $HOME/.bashrc
 
 ### Apache Webserver ###
 USER root
