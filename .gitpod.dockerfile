@@ -6,12 +6,9 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Download Config Files ###
 USER gitpod
-RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress
-
-# Install WordPress setup scripts
-USER gitpod
-RUN ls $HOME/gitpod-wordpress/conf
-RUN cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc
+RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
+    # Install WordPress setup scripts
+    && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc
 
 ### Apache Webserver ###
 USER root
@@ -20,11 +17,10 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && chown -R gitpod:gitpod /var/run/apache2 /var/lock/apache2 /var/log/apache2 \
     && echo "include ${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf \
-    && echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars
+    && echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars \
 
-### PHP ###
-USER root
-RUN apt-get -y remove php* \
+    ### PHP ###
+    && apt-get -y remove php* \
     && add-apt-repository ppa:ondrej/php \
     && apt-get update \
     && apt-get -y install libapache2-mod-php \
@@ -48,11 +44,10 @@ RUN apt-get -y remove php* \
     && a2dismod mpm_event \
     && a2enmod mpm_prefork \
     && a2dismod php* \
-    && a2enmod php${PHP_VERSION}
+    && a2enmod php${PHP_VERSION} \
 
-### WP-CLI ###
-USER root
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    ### WP-CLI ###
+    && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
@@ -63,13 +58,13 @@ USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip -qn $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip \
-    && cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess
+    && cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess \
 
-# Download Adminer from https://www.adminer.org/
-RUN mkdir $HOME/wordpress/database/ \
+    # Download Adminer from https://www.adminer.org/
+    && mkdir $HOME/wordpress/database/ \
     && wget https://github.com/vrana/adminer/releases/download/v4.7.4/adminer-4.7.4-mysql.php \
-        -O $HOME/wordpress/database/index.php
+        -O $HOME/wordpress/database/index.php \
 
-# Create a endpoint with phpinfo()
-RUN mkdir $HOME/wordpress/phpinfo/ \
+    # Create a endpoint with phpinfo()
+    && mkdir $HOME/wordpress/phpinfo/ \
     && echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
