@@ -52,7 +52,7 @@ RUN apt-get -y remove php* \
 ### Download WordPress from https://wordpress.org ### 
 USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
-    && unzip $HOME/wordpress.zip -d $HOME \
+    && unzip -qn $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip \
     && echo "memory_limit = 256M" > $HOME/wordpress/.user.ini
 
