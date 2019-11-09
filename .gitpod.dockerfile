@@ -54,7 +54,7 @@ USER root
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
     && chmod +x $HOME/wp-cli.phar \
-    && mv $HOME/wp-cli.phar /usr/local/bin/wp
+    && mv $HOME/wp-cli.phar /usr/local/bin/wp \
     && chown gitpod:gitpod /usr/local/bin/wp
 
 ### Download WordPress from https://wordpress.org ### 
