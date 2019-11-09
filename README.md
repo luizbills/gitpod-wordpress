@@ -10,7 +10,7 @@
 - [Composer](https://getcomposer.org/)
 - [Adminer](https://www.adminer.org/)
 - [NVM](https://github.com/nvm-sh/nvm)
-- [NodeJS](https://nodejs.org/) (LTS)
+- [Node.js](https://nodejs.org/) (LTS)
 - [Xdebug](https://xdebug.org)
 - [WP-CLI](https://wp-cli.org/)
 - Git
