@@ -4,14 +4,17 @@ FROM gitpod/workspace-mysql
 ENV PHP_VERSION="7.3"
 ENV APACHE_DOCROOT="public_html"
 
-### Download WordPress
+### Download WordPress ### 
 USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip
 
-### Download Config Files
+### Download Config Files ### 
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress
+
+### WordPress setup script ###
+RUN cat $HOME/gitpod-wordpress/conf/setup_wordpress.sh >> $HOME/.bashrc
 
 ### Apache Webserver ###
 USER root
@@ -19,8 +22,8 @@ RUN apt-get update \
     && apt-get -y install apache2 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && chown -R gitpod:gitpod /var/run/apache2 /var/lock/apache2 /var/log/apache2 \
-    && echo "include \${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf \
-    && echo ". \${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars
+    && echo "include ${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf \
+    && echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars
 
 # create SSL keys
 # USER root
@@ -50,7 +53,8 @@ RUN apt-get -y purge php* \
         php${PHP_VERSION}-curl \
         php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
     && a2dismod mpm_event \
     && a2enmod mpm_prefork \
     && a2enmod php${PHP_VERSION} \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+
