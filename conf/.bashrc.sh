@@ -20,29 +20,22 @@ function wp-setup () {
     echo 'WordPress already installed'
     return 1
   fi
+  
+  DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
+
+  echo 'Please, wait ...'
 
   # this would cause mv below to match hidden files
   shopt -s dotglob
-
-  wp-init-database 1> /dev/null
-
-  DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
   
-  # install project dependencies
-  cd ${GITPOD_REPO_ROOT}
-  if [ -f composer.json ]; then
-    echo 'Installing Composer packages...'
-    composer update 1> /dev/null
-  fi
-  if [ -f package.json ]; then
-    echo 'Installing NPM packages...'
-    npm i 1> /dev/null
-  fi
+  echo 'Creating MySQL user and database ...'
+  wp-init-database 1> /dev/null
 
   # move the workspace temporarily
   mkdir $HOME/workspace
   mv ${GITPOD_REPO_ROOT}/* $HOME/workspace/
 
+  echo 'Installing WordPress ...'
   # create webserver root and install WordPress there
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   mv $HOME/wordpress/* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
@@ -64,13 +57,25 @@ function wp-setup () {
     --admin_email="admin@gitpod.test"
 
   cd $DESTINATION
+  # install project dependencies
+  if [ -f composer.json ]; then
+    echo 'Installing Composer packages ...'
+    composer update 2> /dev/null
+  fi
+  if [ -f package.json ]; then
+    echo 'Installing NPM packages ...'
+    npm i 2> /dev/null
+  fi
 
   if [ -f $DESTINATION/.init.sh ]; then
+    echo 'Running your .init.sh ...'
     /bin/sh $DESTINATION/.init.sh
   fi
   
   shopt -u dotglob
   touch $FLAG
+  
+  echo 'Done!'
 }
 
 function wp-setup-theme () {
