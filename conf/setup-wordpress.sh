@@ -7,16 +7,8 @@ function _wp_setup () {
   mkdir $HOME/workspace
   mv ${GITPOD_REPO_ROOT}/.[!.]* $HOME/workspace
   
-  # get config files
-  git clone https://github.com/luizbills/gitpod-wordpress
-  
-  # install WordPress
-  wget https://wordpress.org/latest.zip -O wordpress.zip
-  unzip wordpress.zip
-  unlink wordpress.zip
-  
+  # create webserver root and install WordPress there
   mkdir ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
-  
   mv $HOME/wordpress/.[!.]* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   
   if [ -f composer.json ]; then
@@ -42,3 +34,6 @@ function wp_setup_theme () {
 function wp_setup_plugin () {
   _wp_setup "plugins"
 }
+
+export -f wp_setup_theme
+export -f wp_setup_plugin
