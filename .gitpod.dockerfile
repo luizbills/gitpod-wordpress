@@ -1,6 +1,6 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # License: MIT (c) 2019 Luiz Paulo "Bills"
-# Version: 0.3
+# Version: 0.4
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
@@ -55,6 +55,7 @@ RUN apt-get update \
 # - install WP-CLI
 # - install Xdebug
 # - install MailHog
+USER root
 RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
     && wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash \
