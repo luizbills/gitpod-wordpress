@@ -4,17 +4,16 @@ FROM gitpod/workspace-mysql
 ENV PHP_VERSION="7.3"
 ENV APACHE_DOCROOT="public_html"
 
-### Download Config Files ###
-# also:
+# - download config files
 # - install WordPress setup scripts
 USER gitpod
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
     && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc
 
-### Apache Webserver ###
-# also:
+# - install Apache
 # - install PHP
 # - install WP-CLI
+# - install Mailcatcher
 USER root
 RUN apt-get update \
     && apt-get -y install apache2 \
@@ -51,12 +50,15 @@ RUN apt-get update \
         -O $HOME/wp-cli.phar \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
-    && chown gitpod:gitpod /usr/local/bin/wp
+    && chown gitpod:gitpod /usr/local/bin/wp \
+    && gem install mailcatcher --no-ri --no-rdoc \
+    && cp $HOME/gitpod-wordpress/conf/mailcatcher.conf /etc/init/mailcatcher.conf \
+    && phpenmod mailcatcher
+    && service mailcatcher start
 
-### Download WordPress from https://wordpress.org ### 
-# also:
-# - Download Adminer from https://www.adminer.org/
-# - Create a endpoint with phpinfo()
+# - download WordPress from https://wordpress.org
+# - download Adminer from https://www.adminer.org/
+# - create a endpoint with phpinfo()
 USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip -qn $HOME/wordpress.zip -d $HOME \
