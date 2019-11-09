@@ -3,7 +3,9 @@ image:
 
 ports:
 - port: 8080
-  onOpen: open-preview
+  onOpen: open-browser
+- port: 3306
+  onOpen: ignore
 
 tasks:
 - init: wp_setup_plugin # or wp_setup_theme
