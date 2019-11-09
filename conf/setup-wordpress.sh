@@ -27,8 +27,8 @@ function _wp_setup () {
     # npm install
   fi
   
-  mv $HOME/workspace/.[!.]* /workspace/${APACHE_APACHE_DOCROOT}/wp-content/${TARGET}
-  mv $HOME/gitpod-wordpress/conf/wp-config.php workspace/${APACHE_APACHE_DOCROOT}/wp-config.php
+  mv $HOME/workspace/.[!.]* ${GITPOD_REPO_ROOT}/${APACHE_APACHE_DOCROOT}/wp-content/${TARGET}
+  mv $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_APACHE_DOCROOT}/wp-config.php
   
   cd /workspace/${APACHE_APACHE_DOCROOT}
   
