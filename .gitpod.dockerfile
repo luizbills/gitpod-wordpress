@@ -7,7 +7,7 @@ ENV APACHE_DOCROOT="public_html"
 ### Download WordPress
 USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
-    && unzip $HOME/wordpress.zip $HOME \
+    && unzip $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip
 
 ### Download Config Files
