@@ -25,10 +25,13 @@ define( 'WP_DEBUG_DISPLAY', false );
 define( 'WP_MEMORY_LIMIT', '128M' );
 define( 'WP_MAX_MEMORY_LIMIT', '128M' );
 
+// Force SSL
+define( 'FORCE_SSL_ADMIN', true );
+$_SERVER['HTTPS'] = 'on';
+
 
 
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 }
-
 require_once( ABSPATH . 'wp-settings.php' );
