@@ -32,11 +32,11 @@ function wp-setup () {
   cd ${GITPOD_REPO_ROOT}
   if [ -f composer.json ]; then
     echo 'Installing Composer packages...'
-    composer install 1> /dev/null
+    composer update 1> /dev/null
   fi
   if [ -f package.json ]; then
     echo 'Installing NPM packages...'
-    npm install 1> /dev/null
+    npm i 1> /dev/null
   fi
 
   # move the workspace temporarily
