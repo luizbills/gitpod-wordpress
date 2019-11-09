@@ -56,6 +56,8 @@ RUN apt-get update \
     && a2enmod php${PHP_VERSION} \
     && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
+    && wget https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash \
+        -O $HOME/wp-cli-completion.bash \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
     && chown gitpod:gitpod /usr/local/bin/wp
