@@ -30,6 +30,8 @@ function _wp_setup () {
   mv $HOME/workspace/.[!.]* /workspace/${APACHE_APACHE_DOCROOT}/wp-content/${TARGET}
   mv $HOME/gitpod-wordpress/conf/wp-config.php workspace/${APACHE_APACHE_DOCROOT}/wp-config.php
   
+  cd /workspace/${APACHE_APACHE_DOCROOT}
+  
   apacheclt start
 }
 
