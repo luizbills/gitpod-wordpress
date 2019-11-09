@@ -53,8 +53,8 @@ RUN apt-get -y purge php* \
         php${PHP_VERSION}-curl \
         php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-opcache \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && a2dismod mpm_event \
     && a2enmod mpm_prefork \
-    && a2enmod php${PHP_VERSION} \
+    && a2enmod php${PHP_VERSION}
 
