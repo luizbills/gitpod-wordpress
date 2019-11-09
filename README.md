@@ -16,7 +16,7 @@
 
 ## Install
 
-Just copy the `.gitpod.yml` and `.gitpod.dockerfile` to your project root directory and push to your remote repository.
+Just copy the [`.gitpod.yml`](/.gitpod.yml) and [`.gitpod.dockerfile`](/.gitpod.dockerfile) to your project root directory and push to your remote repository.
 
 - If your project is a theme, change the `wp-setup-plugin` to `wp-setup-theme` in your `.gitpod.yml`.
 - By default, the webserver will use PHP `v7.3`. If you need a different version, change it on `ENV PHP_VERSION` in your `.gitpod.dockerfile` (line 4).
