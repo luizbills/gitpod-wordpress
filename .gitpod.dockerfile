@@ -6,9 +6,11 @@ ENV APACHE_DOCROOT="public_html"
 
 # - download config files
 # - install WordPress setup scripts
+# - force ruby version (for mailcatcher)
 USER gitpod
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
-    && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc
+    && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc \
+    && rvm use 2.6 --default
 
 # - install Apache
 # - install PHP
@@ -51,7 +53,6 @@ RUN apt-get update \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
     && chown gitpod:gitpod /usr/local/bin/wp \
-    && rvm use 2.6 --default \
     && apt-get -y install ruby2.6-dev \
     && gem install mailcatcher \
     && cp $HOME/gitpod-wordpress/conf/mailcatcher.conf /etc/init/mailcatcher.conf \
