@@ -6,6 +6,7 @@
 
 - LAMP (Apache, MySQL, PHP)
 - [Composer](https://getcomposer.org/)
+- [Adminer](https://www.adminer.org/)
 - [NVM](https://github.com/nvm-sh/nvm)
 - [NodeJS](https://nodejs.org/)
 - [Xdebug](https://xdebug.org)
@@ -40,6 +41,17 @@ Your admin credentials:
 username: admin
 password: password
 ```
+
+### Utilities
+
+- You can use the following commands in terminal:
+  - `browse-url <endpoint>`: open an endpoint of your WordPress installation.
+  - `browse-home`: alias for `browse-url /` (your Homepage)
+  - `browse-wpadmin`: alias for `browse-url /wp-admin` (WordPress Admin Painel)
+  - `browse-dbadmin`: alias for `browse-url /database` (to manage your database with Adminer)
+  - `browse-phpinfo`: alias for `browse-url /phpinfo` (a page with `<?php phpinfo(); ?>`)
+  
+- You can setup your PHP on `.htaccess` file (eg: `php_value max_execution_time 600`)
 
 ## Contributing
 
