@@ -62,10 +62,10 @@ password: password
 To contribute, follow these steps:
 
 1. Fork this repository.
-1. Create a branch: git checkout -b <branch_name>.
-1. Make your changes and commit them: git commit -m '<commit_message>'
-1. Push to the original branch: git push origin <project_name>/<location>
-1. Create the pull request.
+1. Create a branch: `git checkout -b <branch_name>`.
+1. Make your changes and commit them: `git commit -m '<commit_message>'`
+1. Push to your fork: `git push origin <branch_name>`
+1. Create the Pull Request.
 
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
