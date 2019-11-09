@@ -24,6 +24,8 @@ define( 'WP_DEBUG_DISPLAY', false );
 
 define( 'WP_MEMORY_LIMIT', '256M' );
 define( 'WP_MAX_MEMORY_LIMIT', '256M' );
+define( 'WP_HOME', 'https://' . $_SERVER['HTTP_HOST'] );
+define( 'WP_SITEURL', 'https://' . $_SERVER['HTTP_HOST'] );
 
 // Force SSL
 $_SERVER['HTTPS'] = 'on';
