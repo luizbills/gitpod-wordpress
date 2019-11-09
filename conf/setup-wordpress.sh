@@ -1,3 +1,4 @@
+# WordPress Setup Script
 function _wp_setup () {
   TARGET=$1
   
