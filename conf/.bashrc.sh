@@ -109,9 +109,9 @@ function browse-mails () {
   echo 'Not implemented yet.';
 }
 
-export -f open-url
+export -f browse-url
 export -f browse-home
-export -f open-wpadmin
-export -f open-dbadmin
-export -f open-phpinfo
-export -f open-mails
+export -f browse-wpadmin
+export -f browse-dbadmin
+export -f browse-phpinfo
+export -f browse-mails
