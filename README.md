@@ -4,11 +4,13 @@
 
 ## Features
 
-- LAMP
-- Composer
-- NodeJS & NPM
-- Xdebug
-- WP-CLI
+- LAMP (Apache, MySQL, PHP)
+- [Composer](https://getcomposer.org/)
+- [NVM](https://github.com/nvm-sh/nvm)
+- [NodeJS](https://nodejs.org/)
+- [Xdebug](https://xdebug.org)
+- [WP-CLI](https://wp-cli.org/)
+- [Mailcatcher](https://mailcatcher.me/)
 
 ## Install
 
