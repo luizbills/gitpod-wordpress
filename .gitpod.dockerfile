@@ -10,7 +10,6 @@ RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip \
     && echo "memory_limit = 256M" > $HOME/wordpress/.user.ini
-    
 
 # Download Adminer from https://www.adminer.org/
 RUN mkdir $HOME/wordpress/database/ \
