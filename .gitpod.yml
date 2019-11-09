@@ -2,11 +2,15 @@ image:
   file: .gitpod.dockerfile
 
 ports:
-- port: 8080
-  onOpen: open-preview
-- port: 3306
-  onOpen: ignore
+  - port: 8080
+    onOpen: open-preview
+  - port: 3306
+    onOpen: ignore
 
 tasks:
-- init: wp-setup-plugin # or wp-setup-theme
-  command: apachectl start
+  - name: Apache
+    init: wp-setup-plugin # or wp-setup-theme
+    command: >
+      clear
+      && apache2ctl start
+      && multitail /var/log/apache2/access.log -I /var/log/apache2/error.log
