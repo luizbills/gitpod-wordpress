@@ -51,7 +51,9 @@ RUN apt-get update \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
     && chown gitpod:gitpod /usr/local/bin/wp \
-    && gem install mailcatcher --no-ri --no-rdoc \
+    && rvm use 2.6 --default \
+    && apt-get -y install ruby2.6-dev \
+    && gem install mailcatcher \
     && cp $HOME/gitpod-wordpress/conf/mailcatcher.conf /etc/init/mailcatcher.conf \
     && phpenmod mailcatcher \
     && service mailcatcher start
