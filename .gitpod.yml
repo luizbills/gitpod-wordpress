@@ -6,5 +6,5 @@ ports:
   onOpen: open-preview
 
 tasks:
-- name: Apache
+- init: wp_setup_plugin # or wp_setup_theme
   command: apachectl start
