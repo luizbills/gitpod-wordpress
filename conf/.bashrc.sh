@@ -116,5 +116,6 @@ export -f browse-dbadmin
 export -f browse-phpinfo
 export -f browse-mails
 
-# fix NODE_VERSION env
+# use Node.js LTS
+nvm use lts/* > /dev/null
 export NODE_VERSION=$(node -v | sed 's/v//g')
