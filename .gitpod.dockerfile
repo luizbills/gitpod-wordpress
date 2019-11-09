@@ -56,6 +56,7 @@ RUN apt-get -y remove php* \
         php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
+    && cat $HOME/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini \
     && a2dismod mpm_event \
     && a2enmod mpm_prefork \
     && a2dismod php* \
