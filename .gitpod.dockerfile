@@ -48,9 +48,9 @@ RUN apt-get update \
         php-xdebug \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && cat $HOME/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini \
+    && a2dismod php* \
     && a2dismod mpm_* \
     && a2enmod mpm_prefork \
-    && a2dismod php* \
     && a2enmod php${PHP_VERSION}
 
 # - install WP-CLI
