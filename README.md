@@ -23,11 +23,17 @@ Just copy the `.gitpod.yml` and `.gitpod.dockerfile` to your project root direct
 
 Now you access `https://gitpod.io/#<url-of-your-github-project>`.
 
-Example: [https://gitpod.io/#https://github.com/luizbills/wp-tweaks/](https://gitpod.io/#https://github.com/luizbills/wp-tweaks/)
+> Example: [https://gitpod.io/#https://github.com/luizbills/wp-tweaks/](https://gitpod.io/#https://github.com/luizbills/wp-tweaks/)
 
+Your admin credentials:
+
+```
+username: admin
+password: password
+```
 ## Contributing
 
-To contribute to <project_name>, follow these steps:
+To contribute, follow these steps:
 
 1. Fork this repository.
 1. Create a branch: git checkout -b <branch_name>.
@@ -37,7 +43,7 @@ To contribute to <project_name>, follow these steps:
 
 Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-Found a bug? Report it on GitHub [Issues](https://github.com/luizbills/gitpod-wordpress/issues).
+Just found a bug? Report it on GitHub [Issues](https://github.com/luizbills/gitpod-wordpress/issues).
 
 ## LICENSE
 
