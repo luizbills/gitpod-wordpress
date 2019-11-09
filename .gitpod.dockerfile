@@ -1,14 +1,23 @@
 FROM gitpod/workspace-mysql
 
-### settings ###
+### General Settings ###
 ENV PHP_VERSION="7.3"
 ENV APACHE_DOCROOT="public_html"
 
-### Download WordPress ### 
+### Download WordPress from https://wordpress.org ### 
 USER gitpod
 RUN wget https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unzip $HOME/wordpress.zip -d $HOME \
     && unlink $HOME/wordpress.zip
+
+# Download Adminer from https://www.adminer.org/
+RUN mkdir $HOME/wordpress/database/ \
+    && wget https://github.com/vrana/adminer/releases/download/v4.7.4/adminer-4.7.4-mysql.php \
+        -O $HOME/wordpress/database/index.php
+
+# Create a endpoint with phpinfo()
+RUN mkdir $HOME/wordpress/phpinfo/ \
+    && echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
 
 ### Download Config Files ### 
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress
@@ -51,3 +60,13 @@ RUN apt-get -y remove php* \
     && a2enmod mpm_prefork \
     && a2dismod php* \
     && a2enmod php${PHP_VERSION}
+
+### Create a MySQL user and database ###
+# user     = wordpress
+# password = wordpress
+# database = wordpress
+USER gitpod
+RUN mysql -e "CREATE DATABASE wordpress /*\!40100 DEFAULT CHARACTER SET utf8 */;" \
+    && mysql -e "CREATE USER wordpress@localhost IDENTIFIED BY 'wordpress';" \
+    && mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';" \
+    && mysql -e "FLUSH PRIVILEGES;"
