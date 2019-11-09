@@ -17,7 +17,7 @@ ADD https://api.github.com/repos/luizbills/gitpod-wordpress/compare/master...HEA
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
     && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc \
     && bash -c ". .nvm/nvm.sh \
-        && nvm install stable --lts \
+        && nvm install --lts \
         && npm install -g npm"
 
 # - install Apache
