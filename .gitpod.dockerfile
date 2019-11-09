@@ -53,7 +53,7 @@ RUN apt-get update \
     && chown gitpod:gitpod /usr/local/bin/wp \
     && gem install mailcatcher --no-ri --no-rdoc \
     && cp $HOME/gitpod-wordpress/conf/mailcatcher.conf /etc/init/mailcatcher.conf \
-    && phpenmod mailcatcher
+    && phpenmod mailcatcher \
     && service mailcatcher start
 
 # - download WordPress from https://wordpress.org
