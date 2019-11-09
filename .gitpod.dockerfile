@@ -1,4 +1,4 @@
-# Gitpod docker image for WordPress
+# Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # Author: Luiz Bills
 # License: MIT
 # Version: 0.1
