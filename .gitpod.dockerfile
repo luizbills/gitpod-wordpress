@@ -10,19 +10,20 @@ ENV APACHE_DOCROOT="public_html"
 
 # - download config files
 # - install WordPress setup scripts
-# - install latest LTS NodeJS version
+# - install latest LTS Node.js version
 # - update NPM
 USER gitpod
 ADD https://api.github.com/repos/luizbills/gitpod-wordpress/compare/master...HEAD /dev/null
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
     && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc \
-    && nvm install stable --lts \
-    && npm i -g npm
+    && bash -c ". .nvm/nvm.sh \
+        && nvm install stable --lts \
+        && npm install -g npm"
 
 # - install Apache
 # - install PHP
 # - install WP-CLI
-# - install Mailcatcher
+# - install Xdebug
 USER root
 RUN apt-get update \
     && apt-get -y install apache2 \
