@@ -1,23 +1,42 @@
-function _setup_wp () {
-  target_dir=$1
+function _wp_setup () {
+  TARGET=$1
   
-  cd ${GITPOD_REPO_ROOT}
+  cd $HOME
+  
+  # move the workspace temporarily
+  mkdir $HOME/workspace
+  mv ${GITPOD_REPO_ROOT}/.[!.]* $HOME/workspace
+  
+  # get config files
+  git clone https://github.com/luizbills/gitpod-wordpress
+  
+  # install WordPress
+  wget https://wordpress.org/latest.zip -O wordpress.zip
+  unzip wordpress.zip
+  unlink wordpress.zip
+  
+  mkdir ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
+  
+  mv $HOME/wordpress/.[!.]* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   
   if [ -f composer.json ]; then
-    composer install
+    # composer install
   fi
   
   if [ -f package.json ]; then
-    npm install
+    # npm install
   fi
   
-  mv ${GITPOD_REPO_ROOT} /workspace/${APACHE_APACHE_DOCROOT}/wp-content/${target_dir}/
+  mv $HOME/workspace/.[!.]* /workspace/${APACHE_APACHE_DOCROOT}/wp-content/${TARGET}
+  mv $HOME/gitpod-wordpress/conf/wp-config.php workspace/${APACHE_APACHE_DOCROOT}/wp-config.php
+  
+  apacheclt start
 }
 
-function setup_wp_theme () {
-  _setup_wp themes
+function wp_setup_theme () {
+  _wp_setup "themes"
 }
 
-function setup_wp_plugin () {
-  _setup_wp plugins
+function wp_setup_plugin () {
+  _wp_setup "plugins"
 }
