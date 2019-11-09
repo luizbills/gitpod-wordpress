@@ -10,7 +10,8 @@
 - [NodeJS](https://nodejs.org/)
 - [Xdebug](https://xdebug.org)
 - [WP-CLI](https://wp-cli.org/)
-- [Mailcatcher](https://mailcatcher.me/)
+- Git
+- SVN
 
 ## Install
 
