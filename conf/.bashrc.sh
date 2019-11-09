@@ -83,34 +83,35 @@ export -f wp-setup-theme
 export -f wp-setup-plugin
 
 # Helpers
-function open-url () {
+function browse-url () {
   URL=$(gp url 8080 | sed -e s/https:\\/\\/// | sed -e s/\\///)
   ENDPOINT=${1:-""}
-  gp preview "${URL}/${ENDPOINT}"
+  gp preview "${URL}${ENDPOINT}"
 }
 
-function open-wpadmin () {
-  open-url "wp-admin"
+function browse-home () {
+  browse-url "/"
 }
 
-function open-dbadmin () {
-  open-url "database"
+function browse-wpadmin () {
+  browse-url "/wp-admin"
 }
 
-function open-phpinfo () {
-  open-url "phpinfo"
+function browse-dbadmin () {
+  browse-url "/database"
 }
 
-function open-phpinfo () {
-  open-url "wp-admin"
+function browse-phpinfo () {
+  browse-url "/phpinfo"
 }
 
-function open-mailcatcher () {
-  # TO DO
+function browse-mails () {
+  echo 'Not implemented yet.';
 }
 
 export -f open-url
+export -f browse-home
 export -f open-wpadmin
 export -f open-dbadmin
 export -f open-phpinfo
-export -f open-mailcatcher
+export -f open-mails
