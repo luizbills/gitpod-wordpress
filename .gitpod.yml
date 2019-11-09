@@ -8,5 +8,5 @@ ports:
   onOpen: ignore
 
 tasks:
-- init: wp_setup_plugin # or wp_setup_theme
+- init: wp-setup-plugin # or wp-setup-theme
   command: apachectl start
