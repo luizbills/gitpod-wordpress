@@ -39,6 +39,7 @@ RUN apt-get update \
         php${PHP_VERSION}-soap \
         php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-opcache \
+        php-xdebug \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && cat $HOME/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini \
     && a2dismod mpm_event \
@@ -49,14 +50,7 @@ RUN apt-get update \
         -O $HOME/wp-cli.phar \
     && chmod +x $HOME/wp-cli.phar \
     && mv $HOME/wp-cli.phar /usr/local/bin/wp \
-    && chown gitpod:gitpod /usr/local/bin/wp \
-    && apt-add-repository ppa:brightbox/ruby-ng \
-    && apt-get update \
-    && apt-get -y install ruby2.6-dev \
-    && gem install mailcatcher \
-    && cp $HOME/gitpod-wordpress/conf/mailcatcher.conf /etc/init/mailcatcher.conf \
-    && phpenmod mailcatcher \
-    && service mailcatcher start
+    && chown gitpod:gitpod /usr/local/bin/wp
 
 # - download WordPress from https://wordpress.org
 # - download Adminer from https://www.adminer.org/
