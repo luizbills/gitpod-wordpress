@@ -24,17 +24,19 @@ function wp-setup () {
   # this would cause mv below to match hidden files
   shopt -s dotglob
 
-  wp-init-database
+  wp-init-database 1> /dev/null
 
   DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
   
   # install project dependencies
   cd ${GITPOD_REPO_ROOT}
   if [ -f composer.json ]; then
-    composer install
+    echo 'Installing Composer packages...'
+    composer install 1> /dev/null
   fi
   if [ -f package.json ]; then
-    npm install
+    echo 'Installing NPM packages...'
+    npm install 1> /dev/null
   fi
 
   # move the workspace temporarily
