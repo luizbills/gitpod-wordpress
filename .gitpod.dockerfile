@@ -20,8 +20,6 @@ RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpre
 
 # - install Apache
 # - install PHP
-# - install WP-CLI
-# - install Xdebug
 USER root
 RUN apt-get update \
     && apt-get -y install apache2 \
@@ -50,11 +48,15 @@ RUN apt-get update \
         php-xdebug \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
     && cat $HOME/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini \
-    && a2dismod mpm_event \
+    && a2dismod mpm_* \
     && a2enmod mpm_prefork \
     && a2dismod php* \
-    && a2enmod php${PHP_VERSION} \
-    && wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && a2enmod php${PHP_VERSION}
+
+# - install WP-CLI
+# - install Xdebug
+# - install MailHog
+RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
         -O $HOME/wp-cli.phar \
     && wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash \
         -O $HOME/wp-cli-completion.bash \
