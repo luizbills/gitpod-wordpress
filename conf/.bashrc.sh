@@ -1,6 +1,6 @@
 
 # WordPress Setup Script
-function _wp_setup_database () {
+function wp-init-database () {
   # user     = wordpress
   # password = wordpress
   # database = wordpress
@@ -10,7 +10,7 @@ function _wp_setup_database () {
   mysql -e "FLUSH PRIVILEGES;"
 }
 
-function _wp_setup () {
+function wp-setup () {
   FLAG="$HOME/.wordpress-installed"
 
   # search the flag file
@@ -22,7 +22,7 @@ function _wp_setup () {
   # this would cause mv below to match hidden files
   shopt -s dotglob
   
-  _wp_setup_database
+  wp-init-database
   
   REPO_NAME=$(basename $GITPOD_REPO_ROOT)
   DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
@@ -61,13 +61,35 @@ function _wp_setup () {
   touch $FLAG
 }
 
-function wp_setup_theme () {
-  _wp_setup "themes"
+function wp-setup-theme () {
+  wp-setup "themes"
 }
 
-function wp_setup_plugin () {
-  _wp_setup "plugins"
+function wp-setup-plugin () {
+  wp-setup "plugins"
 }
 
-export -f wp_setup_theme
-export -f wp_setup_plugin
+export -f wp-setup-theme
+export -f wp-setup-plugin
+
+# Helpers
+
+function open-url () {
+  URL=$(gp url 8080 | sed -e s/https:\\/\\/// | sed -e s/\\///)
+  ENDPOINT=${1:-""}
+  
+  gp preview $URL
+}
+
+function open-dbadmin () {
+  open-url "database"
+}
+
+
+function open-phpinfo () {
+  open-url "phpinfo"
+}
+
+function open-mailcatcher () {
+  # TO DO
+}
