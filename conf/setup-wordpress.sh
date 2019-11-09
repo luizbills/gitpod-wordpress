@@ -41,7 +41,7 @@ function _wp_setup () {
 
   # put the project files in the correct place
   mkdir $DESTINATION
-  mv $HOME/workspace $DESTINATION
+  mv $HOME/workspace/* $HOME/workspace/.* $DESTINATION
   
   # create a wp-config.php
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
