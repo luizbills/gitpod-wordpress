@@ -25,7 +25,7 @@ function _wp_setup () {
   _wp_setup_database
   
   REPO_NAME=$(basename $GITPOD_REPO_ROOT)
-  DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}/
+  DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
   
   # install project dependencies
   cd ${GITPOD_REPO_ROOT}
@@ -52,6 +52,10 @@ function _wp_setup () {
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
 
   cd $DESTINATION
+  
+  if [ -f $DESTINATION/init.sh ]; then
+    $DESTINATION/init.sh
+  fi
   
   shopt -u dotglob
   touch $FLAG
