@@ -19,6 +19,8 @@ function _wp_setup () {
     return 1
   fi
   
+  _wp_setup_database
+  
   REPO_NAME=$(basename $GITPOD_REPO_ROOT)
   DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
   
