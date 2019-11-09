@@ -1,2 +1,3 @@
-wp plugin delete hello-dolly
+wp plugin delete hello
 wp plugin delete akismet
+wp plugin activate ${REPO_NAME}
