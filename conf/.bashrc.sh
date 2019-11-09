@@ -1,5 +1,7 @@
 
 # WordPress Setup Script
+export REPO_NAME=$(basename $GITPOD_REPO_ROOT)
+
 function wp-init-database () {
   # user     = wordpress
   # password = wordpress
@@ -18,13 +20,12 @@ function wp-setup () {
     echo 'WordPress already installed'
     return 1
   fi
-  
+
   # this would cause mv below to match hidden files
   shopt -s dotglob
-  
+
   wp-init-database
-  
-  REPO_NAME=$(basename $GITPOD_REPO_ROOT)
+
   DESTINATION=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
   
   # install project dependencies
@@ -51,10 +52,19 @@ function wp-setup () {
   # create a wp-config.php
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
 
+  # Setup WordPress database
+  cd ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
+  wp core install \
+    --url="$(gp url 8080 | sed -e s/https:\\/\\/// | sed -e s/\\///)" \
+    --title="WordPress" \
+    --admin_user="admin" \
+    --admin_password="password" \
+    --admin_email="admin@gitpod.test"
+
   cd $DESTINATION
-  
+
   if [ -f $DESTINATION/init.sh ]; then
-    $DESTINATION/init.sh
+    /bin/sh $DESTINATION/init.sh
   fi
   
   shopt -u dotglob
@@ -73,21 +83,26 @@ export -f wp-setup-theme
 export -f wp-setup-plugin
 
 # Helpers
-
 function open-url () {
   URL=$(gp url 8080 | sed -e s/https:\\/\\/// | sed -e s/\\///)
   ENDPOINT=${1:-""}
-  
-  gp preview $URL
+  gp preview "${URL}/${ENDPOINT}"
+}
+
+function open-wpadmin () {
+  open-url "wp-admin"
 }
 
 function open-dbadmin () {
   open-url "database"
 }
 
-
 function open-phpinfo () {
   open-url "phpinfo"
+}
+
+function open-phpinfo () {
+  open-url "wp-admin"
 }
 
 function open-mailcatcher () {
@@ -95,6 +110,7 @@ function open-mailcatcher () {
 }
 
 export -f open-url
+export -f open-wpadmin
 export -f open-dbadmin
 export -f open-phpinfo
 export -f open-mailcatcher
