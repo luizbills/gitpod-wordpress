@@ -8,8 +8,8 @@ ports:
     onOpen: ignore
 
 tasks:
+  - init: wp-setup-plugin # or wp-setup-theme
   - name: Apache
-    init: wp-setup-plugin # or wp-setup-theme
     command: >
       clear
       && apache2ctl start
