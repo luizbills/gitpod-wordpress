@@ -9,7 +9,6 @@ ports:
 
 tasks:
   - init: wp-setup-plugin # or wp-setup-theme
-  - name: Apache
     command: >
       clear
       && apache2ctl start
