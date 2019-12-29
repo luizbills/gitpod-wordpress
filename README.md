@@ -26,7 +26,7 @@ Just copy the [`.gitpod.yml`](/.gitpod.yml) and [`.gitpod.dockerfile`](/.gitpod.
 Also, the `wp-setup-plugin` (or `wp-setup-theme`) will search for a `.init.sh` file in your project root directory and execute it (if exists). Then, you can use the `wp-cli` to install plugins, install themes, and [more](https://developer.wordpress.org/cli/commands/). Or create your own tasks. 
 
 ```sh
-# file: init.sh
+# .init.sh
 wp plugin install woocommerce --activate # install WooCommerce
 wp plugin activate ${REPO_NAME} # activate your plugin
 ```
