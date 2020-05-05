@@ -130,3 +130,5 @@ export NODE_VERSION=$(node -v | sed 's/v//g')
 # WP-CLI auto completion
 . $HOME/wp-cli-completion.bash
 
+# Go language (necessary for MailHog)
+export GOPATH=$HOME/gocode
