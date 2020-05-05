@@ -15,6 +15,7 @@
 - [WP-CLI](https://wp-cli.org/)
 - Git
 - SVN
+- [MailHog](https://github.com/mailhog/MailHog)
 
 ## Install
 
@@ -54,6 +55,7 @@ password: password
   - `browse-wpadmin`: alias for `browse-url /wp-admin` (WordPress Admin Painel)
   - `browse-dbadmin`: alias for `browse-url /database` (to manage your database with Adminer)
   - `browse-phpinfo`: alias for `browse-url /phpinfo` (a page with `<?php phpinfo(); ?>`)
+  - `browse-emails`: open the MailHog client
   
 - You can setup your PHP on `.htaccess` file (eg: `php_value max_execution_time 600`)
 
