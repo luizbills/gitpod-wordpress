@@ -91,8 +91,9 @@ export -f wp-setup-plugin
 
 # Helpers
 function browse-url () {
-  URL=$(gp url 8080 | sed -e s/https:\\/\\/// | sed -e s/\\///)
   ENDPOINT=${1:-""}
+  PORT=${2:-"8080"}
+  URL=$(gp url $PORT | sed -e s/https:\\/\\/// | sed -e s/\\///)
   gp preview "${URL}${ENDPOINT}"
 }
 
@@ -112,8 +113,8 @@ function browse-phpinfo () {
   browse-url "/phpinfo"
 }
 
-function browse-mails () {
-  echo 'Not implemented yet.';
+function browse-emails () {
+  browse-url "/" "8025"
 }
 
 export -f browse-url
@@ -121,7 +122,7 @@ export -f browse-home
 export -f browse-wpadmin
 export -f browse-dbadmin
 export -f browse-phpinfo
-export -f browse-mails
+export -f browse-emails
 
 # use Node.js LTS
 nvm use lts/* > /dev/null
@@ -129,6 +130,3 @@ export NODE_VERSION=$(node -v | sed 's/v//g')
 
 # WP-CLI auto completion
 . $HOME/wp-cli-completion.bash
-
-# Go language (necessary for MailHog)
-export GOPATH=$HOME/gocode
