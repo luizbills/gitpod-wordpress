@@ -73,7 +73,7 @@ RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
     && unlink $HOME/wordpress.zip \
     && cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess \
     && mkdir $HOME/wordpress/database/ \
-    && wget -q https://github.com/vrana/adminer/releases/download/v4.7.4/adminer-4.7.4-mysql.php \
+    && wget -q https://www.adminer.org/latest.php \
         -O $HOME/wordpress/database/index.php \
     && mkdir $HOME/wordpress/phpinfo/ \
     && echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
