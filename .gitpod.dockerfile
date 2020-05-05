@@ -1,35 +1,38 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # License: MIT (c) 2019 Luiz Paulo "Bills"
-# Version: 0.4
+# Version: 0.5
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
 ENV PHP_VERSION="7.4"
 ENV APACHE_DOCROOT="public_html"
 
-# - download config files
-# - install WordPress setup scripts
-# - install latest LTS Node.js version
-# - update NPM
+### Setups, Node, NPM ###
 USER gitpod
 ADD https://api.github.com/repos/luizbills/gitpod-wordpress/compare/master...HEAD /dev/null
-RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress \
-    && cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc \
-    && bash -c ". .nvm/nvm.sh && nvm install --lts  --latest-npm"
+RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
+    cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
+    . $HOME/.bashrc && \
+    bash -c ". .nvm/nvm.sh && nvm install --lts"
 
-# - install Apache
-# - install PHP
+### MailHog ###
 USER root
-RUN apt-get update \
-    && apt-get -y install apache2 \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
-    && chown -R gitpod:gitpod /var/run/apache2 /var/lock/apache2 /var/log/apache2 \
-    && echo "include ${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf \
-    && echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars \
-    && apt-get -y remove php* \
-    && add-apt-repository ppa:ondrej/php \
-    && apt-get update \
-    && apt-get -y install libapache2-mod-php \
+RUN go get github.com/mailhog/MailHog && \
+    go get github.com/mailhog/mhsendmail && \
+    cp $GOPATH/bin/MailHog /usr/local/bin/mailhog && \
+    cp $GOPATH/bin/mhsendmail /usr/local/bin/mhsendmail && \
+    ln $GOPATH/bin/mhsendmail /usr/sbin/sendmail && \
+    ln $GOPATH/bin/mhsendmail /usr/bin/mail &&\
+    ### Apache ###
+    apt-get -y install apache2 && \
+    chown -R gitpod:gitpod /var/run/apache2 /var/lock/apache2 /var/log/apache2 && \
+    echo "include ${HOME}/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf && \
+    echo ". ${HOME}/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars && \
+    ### PHP ###
+    add-apt-repository ppa:ondrej/php && \
+    apt-get update && \
+    apt-get -y install \
+        libapache2-mod-php \
         php${PHP_VERSION} \
         php${PHP_VERSION}-common \
         php${PHP_VERSION}-cli \
@@ -44,36 +47,27 @@ RUN apt-get update \
         php${PHP_VERSION}-soap \
         php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-opcache \
-        php-xdebug \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
-    && cat $HOME/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini \
-    && a2dismod php* \
-    && a2dismod mpm_* \
-    && a2enmod mpm_prefork \
-    && a2enmod php${PHP_VERSION}
+        php-xdebug && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* && \
+    cat /home/gitpod/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini && \
+    a2dismod php* && \
+    a2dismod mpm_* && \
+    a2enmod mpm_prefork && \
+    a2enmod php${PHP_VERSION} && \
+    ### WP-CLI ###
+    wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O $HOME/wp-cli.phar && \
+    wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash -O $HOME/wp-cli-completion.bash && \
+    chmod +x $HOME/wp-cli.phar && \
+    mv $HOME/wp-cli.phar /usr/local/bin/wp && \
+    chown gitpod:gitpod /usr/local/bin/wp
 
-# - install WP-CLI
-# - install Xdebug
-# - install MailHog
-USER root
-RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-        -O $HOME/wp-cli.phar \
-    && wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash \
-        -O $HOME/wp-cli-completion.bash \
-    && chmod +x $HOME/wp-cli.phar \
-    && mv $HOME/wp-cli.phar /usr/local/bin/wp \
-    && chown gitpod:gitpod /usr/local/bin/wp
-
-# - download WordPress from https://wordpress.org
-# - download Adminer from https://www.adminer.org/
-# - create a endpoint with phpinfo()
+### WordPress, Adminer ###
 USER gitpod
-RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip \
-    && unzip -qn $HOME/wordpress.zip -d $HOME \
-    && unlink $HOME/wordpress.zip \
-    && cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess \
-    && mkdir $HOME/wordpress/database/ \
-    && wget -q https://www.adminer.org/latest.php \
-        -O $HOME/wordpress/database/index.php \
-    && mkdir $HOME/wordpress/phpinfo/ \
-    && echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
+RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip && \
+    unzip -qn $HOME/wordpress.zip -d $HOME && \
+    unlink $HOME/wordpress.zip && \
+    cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess && \
+    mkdir $HOME/wordpress/database/ && \
+    wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php && \
+    mkdir $HOME/wordpress/phpinfo/ && \
+    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
