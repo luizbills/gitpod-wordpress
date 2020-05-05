@@ -4,7 +4,7 @@
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
-ENV PHP_VERSION="7.3"
+ENV PHP_VERSION="7.4"
 ENV APACHE_DOCROOT="public_html"
 
 # - download config files
