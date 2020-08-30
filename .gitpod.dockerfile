@@ -63,6 +63,7 @@ RUN go get github.com/mailhog/MailHog && \
 
 ### WordPress, Adminer ###
 USER gitpod
+ADD https://api.wordpress.org/secret-key/1.1/salt /dev/null
 RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip && \
     unzip -qn $HOME/wordpress.zip -d $HOME && \
     unlink $HOME/wordpress.zip && \
