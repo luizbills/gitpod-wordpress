@@ -36,6 +36,15 @@ function wp-setup () {
   mv ${GITPOD_REPO_ROOT}/* $HOME/workspace/
 
   echo 'Installing WordPress ...'
+  wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip
+  unzip -qn $HOME/wordpress.zip -d $HOME
+  unlink $HOME/wordpress.zip
+  cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess
+  mkdir $HOME/wordpress/database/
+  wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php
+  mkdir $HOME/wordpress/phpinfo/
+  echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
+  
   # create webserver root and install WordPress there
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   mv $HOME/wordpress/* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
@@ -46,6 +55,10 @@ function wp-setup () {
   
   # create a wp-config.php
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
+  
+  # create a debugger launch.json
+  mkdir ${GITPOD_REPO_ROOT}/.theia
+  mv $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
 
   # Setup WordPress database
   cd ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
@@ -72,6 +85,7 @@ function wp-setup () {
     /bin/sh $DESTINATION/.init.sh
   fi
   
+  # finish
   shopt -u dotglob
   touch $FLAG
   

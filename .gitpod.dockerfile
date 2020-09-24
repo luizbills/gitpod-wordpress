@@ -1,6 +1,6 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # License: MIT (c) 2019 Luiz Paulo "Bills"
-# Version: 0.5
+# Version: 0.6
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
@@ -9,7 +9,7 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD https://api.wordpress.org/secret-key/1.1/salt /dev/null
+ADD "https://api.wordpress.org/secret-key/1.1/salt?r=164575" /dev/null
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
@@ -50,6 +50,7 @@ RUN go get github.com/mailhog/MailHog && \
         php-xdebug && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* && \
     cat /home/gitpod/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini && \
+    ### Setup PHP in Apache ###
     a2dismod php* && \
     a2dismod mpm_* && \
     a2enmod mpm_prefork && \
@@ -61,14 +62,4 @@ RUN go get github.com/mailhog/MailHog && \
     mv $HOME/wp-cli.phar /usr/local/bin/wp && \
     chown gitpod:gitpod /usr/local/bin/wp
 
-### WordPress, Adminer ###
 USER gitpod
-ADD https://api.wordpress.org/secret-key/1.1/salt /dev/null
-RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip && \
-    unzip -qn $HOME/wordpress.zip -d $HOME && \
-    unlink $HOME/wordpress.zip && \
-    cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess && \
-    mkdir $HOME/wordpress/database/ && \
-    wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php && \
-    mkdir $HOME/wordpress/phpinfo/ && \
-    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
