@@ -50,8 +50,6 @@ RUN go get github.com/mailhog/MailHog && \
         php-xdebug && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* && \
     cat /home/gitpod/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini && \
-    ### Xdebug ###
-    cp $HOME/gitpod-wordpress/conf/20-xdebug.ini /etc/php/${PHP_VERSION}/apache2/conf.d/20-xdebug.ini && \
     ### Setup PHP in Apache ###
     a2dismod php* && \
     a2dismod mpm_* && \
