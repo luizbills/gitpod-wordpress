@@ -1,6 +1,6 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # License: MIT (c) 2019 Luiz Paulo "Bills"
-# Version: 0.5
+# Version: 0.6
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
@@ -10,7 +10,7 @@ ENV APACHE_DOCROOT="public_html"
 ### Setups, Node, NPM ###
 USER gitpod
 ADD https://api.wordpress.org/secret-key/1.1/salt /dev/null
-RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
+RUN git clone -b xdebug https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
     bash -c ". .nvm/nvm.sh && nvm install --lts"
@@ -54,6 +54,8 @@ RUN go get github.com/mailhog/MailHog && \
     a2dismod mpm_* && \
     a2enmod mpm_prefork && \
     a2enmod php${PHP_VERSION} && \
+    ### Xdebug ###
+    cp $HOME/gitpod-wordpress/conf/20-xdebug.ini /etc/php/${PHP_VERSION}/apache2/conf.d/20-xdebug.ini && \
     ### WP-CLI ###
     wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O $HOME/wp-cli.phar && \
     wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash -O $HOME/wp-cli-completion.bash && \
@@ -71,4 +73,6 @@ RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip && \
     mkdir $HOME/wordpress/database/ && \
     wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php && \
     mkdir $HOME/wordpress/phpinfo/ && \
-    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
+    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php && \
+    ### Enable Xdebug in debugger ###
+    cp $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
