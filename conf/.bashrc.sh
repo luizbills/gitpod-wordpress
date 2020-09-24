@@ -38,11 +38,9 @@ function wp-setup () {
   echo 'Creating MySQL user and database ...'
   wp-init-database 1> /dev/null
   
+  # install WordPress
   echo 'Installing WordPress ...'
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
-  mv $HOME/wordpress/* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
-  
-  # install WordPress
   cd ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
   wp core download
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
@@ -54,12 +52,12 @@ function wp-setup () {
     --admin_email="admin@gitpod.test"
     
   echo 'Downloading Adminer ...'
-  mkdir $HOME/wordpress/database/
-  wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php
+  mkdir ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/database/
+  wget -q https://www.adminer.org/latest.php -O ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/database/index.php
   
   echo 'Creating phpinfo() page ...'
-  mkdir $HOME/wordpress/phpinfo/
-  echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
+  mkdir ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/phpinfo/
+  echo "<?php phpinfo(); ?>" > ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/phpinfo/index.php
 
   # put the project files in the correct place
   echo 'Creating project files ...'
