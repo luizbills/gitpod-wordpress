@@ -34,6 +34,8 @@ function wp-setup () {
   # move the workspace temporarily
   mkdir $HOME/workspace
   mv ${GITPOD_REPO_ROOT}/* $HOME/workspace/
+
+  echo 'Installing WordPress ...'
   wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip
   unzip -qn $HOME/wordpress.zip -d $HOME
   unlink $HOME/wordpress.zip
@@ -42,8 +44,7 @@ function wp-setup () {
   wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php
   mkdir $HOME/wordpress/phpinfo/
   echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
-
-  echo 'Installing WordPress ...'
+  
   # create webserver root and install WordPress there
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   mv $HOME/wordpress/* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
