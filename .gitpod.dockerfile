@@ -6,12 +6,10 @@ FROM gitpod/workspace-mysql
 ### General Settings ###
 ENV PHP_VERSION="7.4"
 ENV APACHE_DOCROOT="public_html"
-ENV APACHE_DOCROOT="public_html"
-ENV RAND=$(date +%s)
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD "https://api.wordpress.org/secret-key/1.1/salt?t=$RAND" /dev/null
+ADD "https://api.wordpress.org/secret-key/1.1/salt?r=164572" /dev/null
 RUN git clone -b xdebug https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
@@ -65,14 +63,4 @@ RUN go get github.com/mailhog/MailHog && \
     mv $HOME/wp-cli.phar /usr/local/bin/wp && \
     chown gitpod:gitpod /usr/local/bin/wp
 
-### WordPress, Adminer ###
 USER gitpod
-ADD "https://api.wordpress.org/secret-key/1.1/salt?t=$RAND" /dev/null
-RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip && \
-    unzip -qn $HOME/wordpress.zip -d $HOME && \
-    unlink $HOME/wordpress.zip && \
-    cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess && \
-    mkdir $HOME/wordpress/database/ && \
-    wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php && \
-    mkdir $HOME/wordpress/phpinfo/ && \
-    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
