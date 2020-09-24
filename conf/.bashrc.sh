@@ -46,6 +46,10 @@ function wp-setup () {
   
   # create a wp-config.php
   cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
+  
+  # create a debugger launch.json
+  mkdir ${GITPOD_REPO_ROOT}/.theia
+  mv $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
 
   # Setup WordPress database
   cd ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
@@ -71,10 +75,6 @@ function wp-setup () {
     echo 'Running your .init.sh ...'
     /bin/sh $DESTINATION/.init.sh
   fi
-  
-  # create a debugger launch.json
-  mkdir ${GITPOD_REPO_ROOT}/.theia
-  mv $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
   
   # finish
   shopt -u dotglob
