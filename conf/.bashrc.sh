@@ -40,6 +40,7 @@ function wp-setup () {
   
   # install WordPress
   echo 'Installing WordPress ...'
+  rm -rf ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   cd ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
   wp core download
