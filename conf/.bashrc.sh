@@ -35,17 +35,22 @@ function wp-setup () {
   mkdir $HOME/workspace
   mv ${GITPOD_REPO_ROOT}/* $HOME/workspace/
 
-  echo 'Installing WordPress ...'
+  echo 'Downloading WordPress ...'
   wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip
   unzip -qn $HOME/wordpress.zip -d $HOME
   unlink $HOME/wordpress.zip
   cp $HOME/gitpod-wordpress/conf/.htaccess $HOME/wordpress/.htaccess
+  
+  echo 'Downloading Adminer ...'
   mkdir $HOME/wordpress/database/
   wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php
+  
+  echo 'Creating phpinfo() page ...'
   mkdir $HOME/wordpress/phpinfo/
   echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
   
   # create webserver root and install WordPress there
+  echo 'Installing WordPress ...'
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   mv $HOME/wordpress/* ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
 
@@ -70,11 +75,13 @@ function wp-setup () {
     --admin_email="admin@gitpod.test"
 
   cd $DESTINATION
+
   # install project dependencies
   if [ -f composer.json ]; then
     echo 'Installing Composer packages ...'
     composer update 2> /dev/null
   fi
+  
   if [ -f package.json ]; then
     echo 'Installing NPM packages ...'
     npm i 2> /dev/null
