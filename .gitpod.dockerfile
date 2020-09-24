@@ -73,6 +73,4 @@ RUN wget -q https://wordpress.org/latest.zip -O $HOME/wordpress.zip && \
     mkdir $HOME/wordpress/database/ && \
     wget -q https://www.adminer.org/latest.php -O $HOME/wordpress/database/index.php && \
     mkdir $HOME/wordpress/phpinfo/ && \
-    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php && \
-    ### Enable Xdebug in debugger ###
-    cp $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
+    echo "<?php phpinfo(); ?>" > $HOME/wordpress/phpinfo/index.php
