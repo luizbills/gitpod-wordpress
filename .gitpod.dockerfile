@@ -9,7 +9,7 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD "https://api.wordpress.org/secret-key/1.1/salt?r=164572" /dev/null
+ADD "https://api.wordpress.org/secret-key/1.1/salt?r=164573" /dev/null
 RUN git clone -b xdebug https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
@@ -50,12 +50,13 @@ RUN go get github.com/mailhog/MailHog && \
         php-xdebug && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* && \
     cat /home/gitpod/gitpod-wordpress/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini && \
+    ### Xdebug ###
+    cp $HOME/gitpod-wordpress/conf/20-xdebug.ini /etc/php/${PHP_VERSION}/apache2/conf.d/20-xdebug.ini && \
+    ### Setup PHP in Apache ###
     a2dismod php* && \
     a2dismod mpm_* && \
     a2enmod mpm_prefork && \
     a2enmod php${PHP_VERSION} && \
-    ### Xdebug ###
-    cp $HOME/gitpod-wordpress/conf/20-xdebug.ini /etc/php/${PHP_VERSION}/apache2/conf.d/20-xdebug.ini && \
     ### WP-CLI ###
     wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O $HOME/wp-cli.phar && \
     wget -q https://raw.githubusercontent.com/wp-cli/wp-cli/v2.3.0/utils/wp-completion.bash -O $HOME/wp-cli-completion.bash && \
