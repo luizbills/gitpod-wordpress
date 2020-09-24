@@ -9,8 +9,8 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD "https://api.wordpress.org/secret-key/1.1/salt?r=164574" /dev/null
-RUN git clone -b xdebug https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
+ADD "https://api.wordpress.org/secret-key/1.1/salt?r=164575" /dev/null
+RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
     bash -c ". .nvm/nvm.sh && nvm install --lts"
