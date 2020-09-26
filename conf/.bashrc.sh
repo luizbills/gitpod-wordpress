@@ -78,9 +78,9 @@ function wp-setup () {
     npm i 2> /dev/null
   fi
 
-  if [ -f $DESTINATION/.init.sh ]; then
+  if [ -f ${PROJECT_PATH}/.init.sh ]; then
     echo 'Running your .init.sh ...'
-    /bin/sh $DESTINATION/.init.sh
+    /bin/bash ${PROJECT_PATH}/.init.sh
   fi
   
   # finish
