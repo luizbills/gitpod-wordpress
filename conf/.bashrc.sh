@@ -79,10 +79,11 @@ function wp-setup () {
   fi
 
   if [ -f ${PROJECT_PATH}/.init.sh ]; then
-    echo 'Running your .init.sh ...'
+    echo '.init.sh detected ...'
     cp ${PROJECT_PATH}/.init.sh ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/.init.sh
+    echo 'Running your .init.sh ...'
     /bin/bash ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/.init.sh
-    rm -rf ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/.init.sh
+    # rm -rf ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/.init.sh
   fi
   
   # finish
