@@ -10,6 +10,8 @@ ports:
     onOpen: ignore
   - port: 1025
     onOpen: ignore
+  - port: 9000
+    onOpen: ignore
 
 tasks:
   - init: gp await-port 3306 && wp-setup-plugin # or wp-setup-theme
