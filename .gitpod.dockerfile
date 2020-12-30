@@ -1,6 +1,6 @@
 # Gitpod docker image for WordPress | https://github.com/luizbills/gitpod-wordpress
 # License: MIT (c) 2020 Luiz Paulo "Bills"
-# Version: 0.6.1
+# Version: 0.7
 FROM gitpod/workspace-mysql
 
 ### General Settings ###
@@ -17,6 +17,7 @@ RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpre
 
 ### MailHog ###
 USER root
+ARG DEBIAN_FRONTEND=noninteractive
 RUN go get github.com/mailhog/MailHog && \
     go get github.com/mailhog/mhsendmail && \
     cp $GOPATH/bin/MailHog /usr/local/bin/mailhog && \
@@ -31,7 +32,7 @@ RUN go get github.com/mailhog/MailHog && \
     ### PHP ###
     add-apt-repository ppa:ondrej/php && \
     apt-get update && \
-    apt-get -y install \
+    apt-get -qy install \
         libapache2-mod-php \
         php${PHP_VERSION} \
         php${PHP_VERSION}-common \
