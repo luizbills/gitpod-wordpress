@@ -9,7 +9,7 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD https://api.wordpress.org/secret-key/1.1/salt?rnd=152697 /dev/null
+ADD https://api.wordpress.org/secret-key/1.1/salt?rnd=152658 /dev/null
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
