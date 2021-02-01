@@ -48,6 +48,7 @@ function wp-setup () {
   wp core download --path="${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/"
   
   echo 'Installing WordPress ...'
+  cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
   wp core install \
     --url="$(gp url 8080 | sed -e s/https:\\/\\/// | sed -e s/\\///)" \
     --title="WordPress" \
@@ -55,7 +56,6 @@ function wp-setup () {
     --admin_password="password" \
     --admin_email="admin@gitpod.test" \
     --path="${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/"
-  cp $HOME/gitpod-wordpress/conf/wp-config.php ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-config.php
 
   echo 'Downloading Adminer ...'
   mkdir ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/database/
