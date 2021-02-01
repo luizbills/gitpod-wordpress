@@ -9,7 +9,7 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD https://api.wordpress.org/secret-key/1.1/salt?rnd=152633 /dev/null
+ADD https://api.wordpress.org/secret-key/1.1/salt?rnd=152634 /dev/null
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
@@ -27,8 +27,8 @@ RUN go get github.com/mailhog/MailHog && \
     ### Apache ###
     apt-get -y install apache2 && \
     chown -R gitpod:gitpod /var/run/apache2 /var/lock/apache2 /var/log/apache2 && \
-    echo "include /home/gitpod/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf && \
-    echo ". /home/gitpod/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars && \
+    echo "include $HOME/gitpod-wordpress/conf/apache.conf" > /etc/apache2/apache2.conf && \
+    echo ". $HOME/gitpod-wordpress/conf/apache.env.sh" > /etc/apache2/envvars && \
     ### PHP ###
     apt-get -qy purge php* && \
     add-apt-repository ppa:ondrej/php && \
