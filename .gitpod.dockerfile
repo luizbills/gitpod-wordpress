@@ -58,7 +58,6 @@ RUN go get github.com/mailhog/MailHog && \
     a2dismod mpm_* && \
     a2enmod mpm_prefork && \
     a2enmod php${PHP_VERSION} && \
-    service apache2 restart && \
     ### WP-CLI ###
     wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O $HOME/wp-cli.phar && \
     chmod +x $HOME/wp-cli.phar && \
