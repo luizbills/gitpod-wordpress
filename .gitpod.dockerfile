@@ -9,7 +9,7 @@ ENV APACHE_DOCROOT="public_html"
 
 ### Setups, Node, NPM ###
 USER gitpod
-ADD https://api.wordpress.org/secret-key/1.1/salt?rnd=152622 /dev/null
+ADD https://api.wordpress.org/secret-key/1.1/salt?rnd=152633 /dev/null
 RUN git clone https://github.com/luizbills/gitpod-wordpress $HOME/gitpod-wordpress && \
     cat $HOME/gitpod-wordpress/conf/.bashrc.sh >> $HOME/.bashrc && \
     . $HOME/.bashrc && \
@@ -58,6 +58,7 @@ RUN go get github.com/mailhog/MailHog && \
     a2dismod mpm_* && \
     a2enmod mpm_prefork && \
     a2enmod php${PHP_VERSION} && \
+    service apache2 restart && \
     ### WP-CLI ###
     wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O $HOME/wp-cli.phar && \
     chmod +x $HOME/wp-cli.phar && \
