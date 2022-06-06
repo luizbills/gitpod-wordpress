@@ -10,28 +10,28 @@ ENV APACHE_DOCROOT="public_html"
 
 ## Get the settings files
 USER gitpod
-ADD "https://api.wordpress.org/secret-key/1.1/salt?time=1654516901" skipcache
-RUN git clone --branch next https://github.com/luizbills/gitpod-wordpress/ /home/gitpod/.gitpod-conf
+ADD "https://api.wordpress.org/secret-key/1.1/salt?time=1654516902" skipcache
+RUN git clone https://github.com/luizbills/gitpod-wordpress/ /home/gitpod/.gitpod-conf
 
 ## Install nvm and NodeJS (version: LTS)
-# RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
-#     bash -c ". .nvm/nvm.sh && nvm install --lts"
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
+    bash -c ". .nvm/nvm.sh && nvm install --lts"
 
-# ## Install Go
-# ENV GO_VERSION="1.17.11"
-# ENV GOPATH=$HOME/go-packages
-# ENV GOROOT=$HOME/go
-# ENV PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-# RUN curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz | tar xzs
+## Install Go
+ENV GO_VERSION="1.17.11"
+ENV GOPATH=$HOME/go-packages
+ENV GOROOT=$HOME/go
+ENV PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+RUN curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz | tar xzs
 
-# ### Install Mailhog
-# RUN go install github.com/mailhog/MailHog@latest && \
-#     go install github.com/mailhog/mhsendmail@latest && \
-#     sudo cp $GOPATH/bin/MailHog /usr/local/bin/mailhog && \
-#     sudo cp $GOPATH/bin/mhsendmail /usr/local/bin/mhsendmail && \
-#     sudo ln $GOPATH/bin/mhsendmail /usr/sbin/sendmail && \
-#     sudo ln $GOPATH/bin/mhsendmail /usr/bin/mail &&\
-#     sudo rm -rf $GOPATH/src $GOPATH/pkg /home/gitpod/.cache/go /home/gitpod/.cache/go-build
+### Install Mailhog
+RUN go install github.com/mailhog/MailHog@latest && \
+    go install github.com/mailhog/mhsendmail@latest && \
+    sudo cp $GOPATH/bin/MailHog /usr/local/bin/mailhog && \
+    sudo cp $GOPATH/bin/mhsendmail /usr/local/bin/mhsendmail && \
+    sudo ln $GOPATH/bin/mhsendmail /usr/sbin/sendmail && \
+    sudo ln $GOPATH/bin/mhsendmail /usr/bin/mail &&\
+    sudo rm -rf $GOPATH/src $GOPATH/pkg /home/gitpod/.cache/go /home/gitpod/.cache/go-build
 
 ## Install WebServer
 USER root
@@ -80,5 +80,3 @@ RUN cat /home/gitpod/.gitpod-conf/conf/.bashrc.sh >> /home/gitpod/.bashrc && \
     . /home/gitpod/.bashrc
 
 USER gitpod
-RUN cat /etc/mysql/mariadb.conf.d/100-mysql-gitpod.cnf && sleep 10
-RUN mysqld --daemonize && sleep 10
