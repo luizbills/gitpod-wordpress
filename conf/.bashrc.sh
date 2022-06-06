@@ -39,7 +39,6 @@ function wp-setup () {
   wp-init-database 1> /dev/null
   
   # install WordPress
-  
   rm -rf ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   mkdir -p ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}
   cd ${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/
@@ -144,6 +143,10 @@ export -f browse-wpadmin
 export -f browse-dbadmin
 export -f browse-phpinfo
 export -f browse-emails
+
+# load NVM
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # use Node.js LTS
 nvm use lts/* > /dev/null
