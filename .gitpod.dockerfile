@@ -64,7 +64,7 @@ RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rew
     echo ". /home/gitpod/.gitpod-conf/conf/apache.env.sh" > /etc/apache2/envvars && \
     mkdir -p /var/run/mysqld /var/log/mysql && \
     chown -R gitpod:gitpod /etc/mysql /var/run/mysqld /var/log/mysql /var/lib/mysql && \
-    cat home/gitpod/.gitpod-conf/conf/mysql.cnf > /etc/mysql/mariadb.conf.d/100-mysql-gitpod.cnf && \
+    cat /home/gitpod/.gitpod-conf/conf/mysql.cnf > /etc/mysql/mariadb.conf.d/100-mysql-gitpod.cnf && \
     cat /home/gitpod/.gitpod-conf/conf/php.ini >> /etc/php/${PHP_VERSION}/apache2/php.ini
 
 ## Install WP-CLI
@@ -75,7 +75,6 @@ RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 ## Setup .bashrc
 RUN cat /home/gitpod/.gitpod-conf/conf/.bashrc.sh >> /home/gitpod/.bashrc && \
-    # cat /home/gitpod/.gitpod-conf/conf/mysql-bashrc-launch.sh >> /home/gitpod/.bashrc && \
     echo  >> /home/gitpod/.bashrc && \
     . /home/gitpod/.bashrc
 
