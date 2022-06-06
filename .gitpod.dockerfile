@@ -10,7 +10,7 @@ ENV APACHE_DOCROOT="public_html"
 
 ## Get the settings files
 USER gitpod
-ADD "https://api.wordpress.org/secret-key/1.1/salt?time=1654516902" skipcache
+ENV TRIGGER_REBUILD=1
 RUN git clone https://github.com/luizbills/gitpod-wordpress/ --branch next /home/gitpod/.gitpod-conf
 
 ## Install nvm and NodeJS (version: LTS)
