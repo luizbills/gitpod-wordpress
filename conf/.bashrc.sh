@@ -1,3 +1,17 @@
+# MariaDB start script
+# This is a workaround for not having something like supervisord
+if [ ! -e /run/mysqld/gitpod-init.lock ]
+then
+    touch /run/mysqld/gitpod-init.lock
+
+    # initialize database structures on disk, if needed
+    # [ ! -d /workspace/mysql ] && mysqld --initialize-insecure
+
+    # launch database, if not running
+    [ ! -e /run/mysqld/mysqld.pid ] && mysqld --daemonize
+
+    rm /run/mysqld/gitpod-init.lock
+fi
 
 # WordPress Setup Script
 export REPO_NAME=$(basename $GITPOD_REPO_ROOT)
